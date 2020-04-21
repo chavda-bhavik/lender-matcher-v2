@@ -3,7 +3,7 @@ import { Container,Row,Col } from "reactstrap";
 import './AboutComponent.css'
 const FAQ = (props) => {
     return (
-        <section className="bg-light" id="faq">
+        <section className="faq-section bg-light" id="faq">
             <Container>
                 <h2 className="my-3">FAQ</h2>
                 <hr className="divider light mb-3" />

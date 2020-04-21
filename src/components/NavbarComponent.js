@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Collapse, Navbar, NavbarToggler } from 'reactstrap';
-import { Link, animateScroll as scroll} from "react-scroll";
+import { Link } from "react-scroll";
 
 const NavbarComponent = (props) => {
     const [isOpen, setIsOpen] = useState(false);

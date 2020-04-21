@@ -4,6 +4,12 @@
 .BanksHeading {
     font-size: 2.5rem;
 }
+/* .list-box {
+    height: 600px;
+} */
+.BankListItem {
+    padding: 0.25rem 0.5rem;
+}
 .BankListBankName {
     font-size: 21px;
     font-weight: 600;
@@ -30,19 +36,42 @@
     margin: auto 2px
 }
 
-.BankCardName {
-    font-size: 25px;
+/* .BankCardName {
+    font-size: 19px;
     font-weight: 600;
     text-decoration: underline;
 }
 .BankCardAddress {
     font-size: 18px;
     font-weight: 400;
+} */
+.mc-heading {
+    font-size: 16px;
+    font-weight: bold;
+}
+#criteria li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+}
+#criteria {
+    padding-left: 0px;
 }
 
 @media (pointer:coarse) {
+    .SearchAgainBtn {
+        font-size: 15px !important;
+        margin-bottom: 0px !important;
+    }
+    /* .list-box {
+        height: 500px;
+    } */
+    .BankListItem {
+        padding: 0.25rem 0rem !important;
+    }
     .BanksHeading {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        margin-bottom: 0px;
     }
     .BankListBankName {
         font-size: 15px;
@@ -58,5 +87,12 @@
     }
     .BankListWebsite {
         font-size: 11px;
+    }
+    .mc-heading {
+        font-size: 13px !important;
+    }
+    #criteria li {
+        padding-right: 10px;
+        font-size: 12px;
     }
 }

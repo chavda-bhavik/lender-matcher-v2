@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import * as utils from '../../utils/data'
 import Select from 'react-select';
 import './FormComponent.css'
+import Loading from './Loading';
 
 import { Form, Row, Col, FormGroup, Label, Input, Button, FormFeedback, Alert } from "reactstrap";
 
@@ -16,7 +17,7 @@ const FormComponent = (props) => {
     const [isZipcodeValid, setIsZipcodeValid] = useState(true);
     const [zipcodeError, setZipcodeError] = useState("")
     const [alertVisible, setAlertVisible] = useState(true);
-    
+    const [errorAlertVisible, setErrorAlertVisible] = useState(false);
 
     const zipcodeChanged = (value) => {
         if(/^\d*$/.test(value) && value.length <= 6 && value.length >= 3) {
@@ -31,25 +32,47 @@ const FormComponent = (props) => {
         }
         setZipcode(value);
     }
-
     const submit = async () => {
+        // Zipcode Data retriving
         if(zipcode === "") {
             zipcodeChanged("");
+            return;
         }
-        let id = '1vA9L-u__7yvkByn2Oi8M_zBWP3DH0DlrHAwPBPEUxqI';
-        let query = createQuery();
+        setIsLoading(true);
+
+        let us_zipcodes_id = '1gbtej3UZhL7TjZzXaegbCxg-K0P9Qgvl4UNYVsrgv6A';
+        let zipcodeQuery = createZipcodeFetchQuery();
+        let zipcodeData = await fetchData(us_zipcodes_id, zipcodeQuery);
+        if(zipcodeData.length === 0) {
+            setIsLoading(false);
+            setIsZipcodeValid(false);
+            setZipcodeError("No State Found! Try with Different ZipCode.")
+            return;
+        }
+
+        // Data Retriving based on Lat/Long
+        let lat = zipcodeData[0].c[3].v
+        let long = zipcodeData[0].c[4].v;
+        let lender_table_id = '1vA9L-u__7yvkByn2Oi8M_zBWP3DH0DlrHAwPBPEUxqI';
+        let lenderDataQuery = createLenderFetchQuery(lat, long);
         
-        //query = "select%20*%20where%20C%3D'10001'";
-        //console.log(query);
-        //console.log(zipcode, industry, employees, needExpressLoan);
-        let data = await fetchData(id, query);
-        console.log(data);
-        props.setList(data);
+        let lenderData = await fetchData(lender_table_id, lenderDataQuery);
+        if(lenderData.length === 0) {
+            setIsLoading(false);
+            errorAlertVisible(true);
+            return;
+        }
+        setIsLoading(false);
+        props.setList(lenderData);
+        props.setMainIndustry(industry.value);
+        props.setMainEmployee(employees)
+        console.log("ended");
     }
-    const createQuery = () => {
+    const createLenderFetchQuery = (lat, long) => {
         let query = "select * where";
+        query += ` ${lat-10}>R and R<${lat+10} and ${long-10}>S and S<${long+10}`;
         // if(zipcode !== "") {
-        query += ` C>${parseInt(zipcode)-10000} and C<${parseInt(zipcode)+10000}`;
+        // query += ` C>${parseInt(zipcode)-10000} and C<${parseInt(zipcode)+10000}`;
         // }
         if(employees !== "") {
             if(employees === "100+") query += " G>100"
@@ -63,8 +86,12 @@ const FormComponent = (props) => {
         if(needExpressLoan) {
             query += ` and O=TRUE`
         }
-        console.log(query);
+        //console.log(query);
         return encodeURIComponent(query);
+    }
+    const createZipcodeFetchQuery = () => {
+        let query = `select * where A=${zipcode}`
+        return query;
     }
     const fetchData = async (id, query) => {
         let data = await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tq=${query}`).then(data => data.text())
@@ -90,12 +117,23 @@ const FormComponent = (props) => {
             invalid
         />  
     }
+    let processControl = <Button className="bg-dark-blue" onClick={() => submit()} size="lg">Search for lender</Button>
+    if(isLoading) {
+        processControl = <Loading />
+    }
     return (
-        <section className="bg-light" id="app">
+        <section className="form-section bg-light">
             <div className="container">
                 <p className="PageHeading">Find local Lenders that help Businesses like yours</p>
                 <p className="PageSubHeading">Describe your Business</p>
                 <Form>
+                    <Row className="p-0 mb-3">
+                        <Col xs={12} md={10}>
+                            <Alert color="danger" isOpen={errorAlertVisible} toggle={() => setErrorAlertVisible(!errorAlertVisible)}>
+                                <p>No banks found! Please try with different Criteria.</p>
+                            </Alert>
+                        </Col>
+                    </Row>
                     <Row className="p-0 mb-3">
                         <Col xs={12} md={6}>
                             <FormGroup>
@@ -129,15 +167,6 @@ const FormComponent = (props) => {
                             </div>
                         </Col>
                     </Row>
-                    {/* <Row className="p-0 mb-3">
-                        <Col xs={12} md={9}>
-                            <FormGroup>
-                                <Label>Reason for Loan</Label>
-                                <Input type="text" placeholder="Write a Reason" />
-                            </FormGroup>
-                        </Col>
-                    </Row> */}
-                    
                     <Row className="p-0 mb-3">
                         <Col xs={12} md={10}>
                             <FormGroup check inline>
@@ -150,7 +179,6 @@ const FormComponent = (props) => {
                             </Label> */}
                         </Col>
                     </Row>
-
                     <Row className="p-0 mb-3">
                         <Col xs={12} md={10}>
                         <Alert color="secondary" isOpen={alertVisible} toggle={() => setAlertVisible(!alertVisible)}>
@@ -160,8 +188,7 @@ const FormComponent = (props) => {
                         </Alert>
                         </Col>
                     </Row>
-                    
-                    <Button className="bg-dark-blue" onClick={() => submit()} size="lg">Search for lender</Button>
+                    {processControl}
                 </Form>
             </div>
         </section>

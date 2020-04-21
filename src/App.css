@@ -1,9 +1,33 @@
 .bg-dark-blue {
   background-color: #084b6d !important;
 }
-section {
+.section {
   height: 100vh;
   min-height: 40rem;
   padding-top: 4.5rem;
   padding-bottom: 0;
+}
+.app-section {
+  height: 100vh;
+  min-height: 40rem;
+  padding-top: 5.5rem;
+  padding-bottom: 0;
+}
+.faq-section {
+  padding-top: 3rem;
+  padding-bottom: 1.5rem;
+}
+.about-section {
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+}
+a:hover {
+  cursor: pointer;
+}
+.nav-link {
+  color: #084b6d !important;
+  font-weight: 500;
+}
+.nav-link .active {
+  font-weight: 600;
 }
