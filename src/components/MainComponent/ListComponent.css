@@ -1,0 +1,62 @@
+.list-section {
+    padding: 5rem 0 0 0;
+}
+.BanksHeading {
+    font-size: 2.5rem;
+}
+.BankListBankName {
+    font-size: 21px;
+    font-weight: 600;
+    margin-bottom: 0px;
+}
+.BankListAddress {
+    color: gray;
+    margin-bottom: 3px;
+    font-size: 16px;
+}
+.BankListPhoneNumber {
+    font-size: 14px;
+    margin: 0px;
+}
+.BankListWebsite {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0px;
+}
+.PaginationText {
+    font-size: 20px;
+}
+.BankListIcon {
+    margin: auto 2px
+}
+
+.BankCardName {
+    font-size: 25px;
+    font-weight: 600;
+    text-decoration: underline;
+}
+.BankCardAddress {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+@media (pointer:coarse) {
+    .BanksHeading {
+        font-size: 1.5rem;
+    }
+    .BankListBankName {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 3px;
+    }
+    .BankListAddress {
+        margin-bottom: 0.3rem;
+        font-size: 13px;
+    }
+    .BankListPhoneNumber {
+        font-size: 11px;
+    }
+    .BankListWebsite {
+        font-size: 11px;
+    }
+}

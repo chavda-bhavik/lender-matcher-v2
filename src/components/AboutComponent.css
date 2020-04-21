@@ -1,0 +1,19 @@
+.Disclaimer {
+    font-size: 20px;
+    font-weight: 600;
+}
+.site-info {
+    font-size: 18px;
+    font-weight: 500;
+    text-align: justify;
+}
+@media (pointer:coarse) {
+    .Disclaimer {
+        font-size: 15px;
+        font-weight: 600;
+    }
+    .site-info {
+        font-size: 13px;
+        font-weight: 500;
+    }
+}
