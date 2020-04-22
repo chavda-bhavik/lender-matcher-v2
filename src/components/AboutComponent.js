@@ -3,7 +3,7 @@ import { Container,Row,Col } from "reactstrap";
 import './AboutComponent.css'
 const About = (props) => {
     return (
-        <section className="about-section bg-light" id="about" style={{'marginTop':'300px'}}>
+        <section className="about-section bg-light" id="about">
             <Container>
                 <Row>
                     <Col xs={11} md={9}>

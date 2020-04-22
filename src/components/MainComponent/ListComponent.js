@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import { Row, Col, ListGroup, ListGroupItem, Button, Badge } from "reactstrap";
+import { Row, Col, ListGroup, ListGroupItem, Button } from "reactstrap";
 import './ListComponent.css'
 
 const renderBank = (bank, index, industry, employee) => (
     <ListGroupItem className="BankListItem" key={index}>
         <Row className="p-1">
-            <Col xs={7} md={6} className="pr-1">
+            <Col xs={12} md={6}>
                 <p className="BankListBankName">{bank.c[0].v}</p>
                 <p className="BankListAddress">{bank.c[3].v}</p>
             </Col>
-            <Col xs={5} md={2} className="p-0">
+            <Col xs={12} md={2}>
                 <p className="BankListBankName">${bank.c[5].v}</p>
                 <p className="BankListAddress">average loan amount</p>
             </Col>
@@ -39,34 +39,32 @@ const renderBank = (bank, index, industry, employee) => (
 
 const List = React.memo((props) => {
     let banks = props.bankList || [];
-    let totalBanks = banks.length;
-    let showingBanks = [];
     let bankPerPage = 5;
+    let totalBanks = banks.length;
+    let totalLinks = Math.ceil(totalBanks / bankPerPage);
+    
+    let showingBanks = [];
+    
 
-    const [currentIndex, setCurrentIndex] = useState(0)
-    // const [selectedBank, setSelectedBank] = useState(null);
-    // const [isBankSelected, setIsBankSelected] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(1)
+    let isNextDisabled = (currentIndex === totalLinks) ? true : false;
 
-    let isPrevDisabled = currentIndex === 0 ? true : false;
-    let isNextDisabled = (currentIndex + bankPerPage >= totalBanks - 1) ? true : false;
-
-    for(var i=currentIndex;i<=Math.min(totalBanks - 1, currentIndex+bankPerPage-1);i++) {
+    for(var i=(currentIndex * bankPerPage - bankPerPage);i<=Math.min(totalBanks - 1, currentIndex*bankPerPage-1);i++) {
         showingBanks.push(banks[i]);
     }
 
-    const next = () => {
-        setCurrentIndex( currentIndex + bankPerPage);
+    const jumpTo = (i) => {
+        setCurrentIndex(i);
     }
-    const prev = () => {
-        setCurrentIndex( currentIndex - bankPerPage);
-    }
+    let nextBtn = <button className="custom-rounded active" onClick={() => setCurrentIndex(currentIndex + 1)} >Next</button>
+    if(isNextDisabled) nextBtn = <button className="custom-rounded active" disabled>Next</button>
 
     return (
-        <section className="list-section bg-light">
+        <section className="list-section bg-light" id="app">
             <div className="container">
                 <div className="d-flex justify-content-between p-2">
                     <p className="BanksHeading">{totalBanks} lenders found</p>
-                    <Button onClick={props.resetSearch} color="link" className="SearchAgainBtn">Search Again</Button>
+                    <Button color="link" onClick={props.resetSearch} className="SearchAgainBtn">Search Again</Button>
                 </div>
                 <div className="list-box">
                     <ListGroup flush>
@@ -77,12 +75,18 @@ const List = React.memo((props) => {
                         }
                     </ListGroup>
                 </div>
-                <div className="d-flex justify-content-between p-2">
-                    <Button className="bg-dark-blue" disabled={isPrevDisabled} onClick={() => prev()}>Prev</Button>
-                        <p className="PaginationText">
-                         <Badge className="bg-dark-blue">{currentIndex + 1}</Badge> - <Badge className="bg-dark-blue">{ Math.min(totalBanks, currentIndex+bankPerPage) }</Badge>
-                        </p>
-                    <Button className="bg-dark-blue" disabled={isNextDisabled} onClick={() => next()}>Next</Button>
+                <div>
+                    {
+                        [...Array(totalLinks).keys()].map( item => {
+                            item = item + 1;
+                            if(currentIndex === item) {
+                                return <span key={item} className="custom-rounded active">{item}</span>
+                            } else {
+                                return <span key={item} onClick={() => jumpTo(item)} className="custom-rounded">{item}</span>
+                            }   
+                        })
+                    }
+                    {nextBtn}
                 </div>
             </div>
         </section>

@@ -66,7 +66,6 @@ const FormComponent = (props) => {
         props.setList(lenderData);
         props.setMainIndustry(industry.value);
         props.setMainEmployee(employees)
-        console.log("ended");
     }
     const createLenderFetchQuery = (lat, long) => {
         let query = "select * where";
@@ -122,7 +121,7 @@ const FormComponent = (props) => {
         processControl = <Loading />
     }
     return (
-        <section className="form-section bg-light">
+        <section className="form-section bg-light" id="app">
             <div className="container">
                 <p className="PageHeading">Find local Lenders that help Businesses like yours</p>
                 <p className="PageSubHeading">Describe your Business</p>
@@ -189,7 +188,7 @@ const FormComponent = (props) => {
                         </Col>
                     </Row>
                     {processControl}
-                </Form>
+                </Form>     
             </div>
         </section>
     )

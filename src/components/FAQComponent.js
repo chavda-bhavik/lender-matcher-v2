@@ -18,11 +18,11 @@ const FAQ = (props) => {
                         <p className="Disclaimer mt-3 mb-0">Who are you?</p>
                         <p className="site-info mb-4">We are a volunteer, pro bono team of engineers, designers, data analysts, and business analysts who come together to support business owners during the current crisis. Participating individuals include:</p>
 
-                        <p className="site-info mb-1"><a href="www.google.com">Ali Baghshomali</a> - Product and data science</p>
-                        <p className="site-info mb-1"><a href="www.google.com">Wolasi Konu</a> - Designer</p>
-                        <p className="site-info mb-1"><a href="www.google.com">Bhavik Chavda</a> - Developer</p>
-                        <p className="site-info mb-1"><a href="www.google.com">Nico Gimenez</a> - Finance</p>
-                        <p className="site-info mb-1"><a href="www.google.com">Ryan Lenchner</a> - Product and marketing</p>
+                        <p className="site-info mb-1"><a href="https://www.linkedin.com/in/abshomali">Ali Baghshomali</a> - Product and data science</p>
+                        <p className="site-info mb-1"><a href="https://www.linkedin.com/in/wolasikonu">Wolasi Konu</a> - Designer</p>
+                        <p className="site-info mb-1"><a href="https://www.linkedin.com/in/bvchavda">Bhavik Chavda</a> - Developer</p>
+                        <p className="site-info mb-1"><a href="https://www.linkedin.com/in/nicogimenez">Nico Gimenez</a> - Finance</p>
+                        <p className="site-info mb-1"><a href="https://www.linkedin.com/in/ryanlechner">Ryan Lenchner</a> - Product and marketing</p>
                     </Col>
                 </Row>
             </Container>
