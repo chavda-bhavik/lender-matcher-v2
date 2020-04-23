@@ -54,6 +54,7 @@
     font-size: 18px;
     color: #084b6d;
     cursor: pointer;
+    display: inline-block;
 }
 button.custom-rounded:disabled {
     cursor: not-allowed;

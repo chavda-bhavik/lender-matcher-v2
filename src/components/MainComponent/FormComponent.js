@@ -160,7 +160,7 @@ const FormComponent = (props) => {
                         </Col>
                         <Col xs={12} md={3}>
                             <div className="form-group">
-                                <label htmlFor="zipcode">Zipcode</label>
+                                <label htmlFor="zipcode">Zipcode<span className="text-danger">*</span></label>
                                 { zipcodeInput }
                                 <FormFeedback>{zipcodeError}</FormFeedback>
                             </div>
@@ -170,7 +170,7 @@ const FormComponent = (props) => {
                         <Col xs={12} md={10}>
                             <FormGroup check inline>
                                 <Label check>
-                                    <Input type="checkbox" value={needExpressLoan} onChange={ () => setNeedExpressLoan(!needExpressLoan) } /> Need an express loan <a href="#">What is this?</a>
+                                    <Input type="checkbox" value={needExpressLoan} onChange={ () => setNeedExpressLoan(!needExpressLoan) } /> Need an express loan <a target="_blank" rel="noopener noreferrer" href="#">What is this?</a>
                                 </Label>
                             </FormGroup>
                             {/* <Label check>
@@ -182,7 +182,7 @@ const FormComponent = (props) => {
                         <Col xs={12} md={10}>
                         <Alert color="secondary" isOpen={alertVisible} toggle={() => setAlertVisible(!alertVisible)}>
                             <p>
-                                Express loans provides up to $350,000 capital for no more than 2 years with an option to revolve. There is turnaround time of 36 hours for approval or denial of a completed application. The uses of proceeds are the same as the standard 7(a) loan. <a href="#">Learn more</a>
+                                <span className="font-weight-bold">Express loans</span> provides up to $350,000 capital for no more than 7 years with an option to revolve. There is turnaround time of 36 hours for approval or denial of a completed application. The uses of proceeds are the same as the standard 7(a) loan. <a target="_blank" rel="noopener noreferrer" href="#">Learn more</a>
                             </p>
                         </Alert>
                         </Col>
