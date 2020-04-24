@@ -22,7 +22,7 @@ const NavbarComponent = (props) => {
                     duration={500} 
                     className="navbar-brand"
                     onClick={toggle}
-                >Lender Matcher App</Link>
+                >Small Business Loan Finder</Link>
                 {/* <button class="navbar-brand" onClick={scrollToTop()} >Lender Matcher App</button> */}
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>

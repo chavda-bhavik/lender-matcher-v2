@@ -10,7 +10,7 @@ const FAQ = (props) => {
                 <Row>
                     <Col xs={11} md={9}>
                         <p className="Disclaimer mb-0">How do we match you to lenders?</p>
-                        <p className="site-info">xyz looks at SBA (7a) lending history since 2010 to identify active lenders. Users will be matched to lenders based on industry, location, lending volume, and the desire for Express Loans.</p>
+                        <p className="site-info">Small Business Loan Finder looks at SBA (7a) lending history since 2010 to identify active lenders. Users will be matched to lenders based on industry, location, lending volume, and the desire for Express Loans.</p>
 
                         <p className="Disclaimer mt-3 mb-0">What data are we using?</p>
                         <p className="site-info">United States Small Business Administration SBA 7(a) <a target="_blank" rel="noopener noreferrer" href="https://www.google.com">loan data reports</a>.</p>
