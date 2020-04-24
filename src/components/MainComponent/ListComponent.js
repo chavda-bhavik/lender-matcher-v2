@@ -9,7 +9,7 @@ const renderBank = (bank, index, industry, employee) => (
                 <p className="BankListBankName">{bank.c[0].v}</p>
                 <p className="BankListAddress">{bank.c[3].v}</p>
             </Col>
-            <Col xs={12} md={3} className="text-center">
+            <Col xs={12} md={3}>
                 <p className="BankListBankName">${bank.c[5].v}</p>
                 <p className="BankListAddress">average loan amount</p>
             </Col>
