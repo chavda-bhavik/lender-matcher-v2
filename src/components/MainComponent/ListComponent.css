@@ -1,8 +1,11 @@
-.list-section {
-    padding: 5rem 0 0 0;
-}
 .BanksHeading {
-    font-size: 2.5rem;
+    font-size: 30px;
+    font-weight: 600;
+}
+.SearchAgainBtn {
+    font-size: 25px !important;
+    font-weight: 600;
+    margin-bottom: 0px !important;
 }
 .list-box {
     display: block;
@@ -86,22 +89,24 @@ button.custom-rounded:disabled {
 }
 
 @media (pointer:coarse) {
-    .average-loan-col {
-        text-align: left;
+    .BanksHeading {
+        font-size: 22px !important;
+        font-weight: 500;
+        margin-bottom: 0px !important;
     }
     .SearchAgainBtn {
-        font-size: 15px !important;
+        font-size: 22px !important;
+        font-weight: 500;
         margin-bottom: 0px !important;
+    }
+    .average-loan-col {
+        text-align: left;
     }
     .list-box {
         height: 440px;
     }
     .BankListItem {
         padding: 0.25rem 0rem !important;
-    }
-    .BanksHeading {
-        font-size: 1.3rem;
-        margin-bottom: 0px;
     }
     .BankListBankName {
         font-size: 15px;

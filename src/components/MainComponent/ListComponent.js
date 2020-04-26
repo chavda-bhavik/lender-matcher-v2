@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import { Row, Col, ListGroup, ListGroupItem, Button } from "reactstrap";
+import { Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 import './ListComponent.css'
 
-const renderBank = (bank, index, industry, employee) => (
+const renderBank = (bank, index, industry, employee, zipcode) => (
     <ListGroupItem className="BankListItem" key={index}>
         <Row className="p-1">
             <Col xs={12} md={5}>
                 <p className="BankListBankName">{bank.c[0].v}</p>
-                <p className="BankListAddress">{bank.c[3].v}</p>
+                <p className="BankListAddress">{bank.c[3].v + ", " + bank.c[1].v + ", " + bank.c[2].v} </p>
             </Col>
-            <Col xs={12} md={3} className="average-loan-col">
-                <p className="BankListBankName">${bank.c[5].v}</p>
+            <Col xs={12} md={3} className="text-left">
+                <p className="BankListBankName">${Math.round(bank.c[7].v).toLocaleString()}</p>
                 <p className="BankListAddress">average loan amount</p>
             </Col>
             <Col xs={12} md={2} className="text-left">
@@ -29,7 +29,8 @@ const renderBank = (bank, index, industry, employee) => (
             <Col>
                 <ul id="criteria">
                     <li className="mc-heading">Matching criteria</li>
-                    <li>{employee === "" ? "" : employee+" employees"}</li>
+                    <li>{zipcode + " zipcode"}</li>
+                    <li>{employee === "" ? "" : employee + " employees"}</li>
                     <li>{industry}</li>
                 </ul>
             </Col>
@@ -60,17 +61,19 @@ const List = React.memo((props) => {
     if(isNextDisabled) nextBtn = <button className="custom-rounded active" disabled>Next</button>
 
     return (
-        <section className="list-section bg-light" id="app">
+        <section className="app-section bg-light" id="app">
             <div className="container">
                 <div className="d-flex justify-content-between p-2">
                     <p className="BanksHeading">{totalBanks} lenders found</p>
-                    <Button color="link" onClick={props.resetSearch} className="SearchAgainBtn">Search Again</Button>
+                    <span>
+                        <a href="#" className="SearchAgainBtn" onClick={props.resetSearch}>Search Again</a>
+                    </span>
                 </div>
                 <div className="list-box">
                     <ListGroup flush>
                         { 
                             showingBanks.map( (bank, index) => {
-                                return renderBank(bank, index, props.industry, props.employee);
+                                return renderBank(bank, index, props.industry, props.employee, props.zipcode);
                             })
                         }
                     </ListGroup>
