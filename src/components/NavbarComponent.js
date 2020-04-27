@@ -4,7 +4,11 @@ import { Link } from "react-scroll";
 
 const NavbarComponent = (props) => {
     const [isOpen, setIsOpen] = useState(false);
-    const toggle = () => setIsOpen(!isOpen);
+    const toggle = (value=false) => setIsOpen(value);
+    const brandNameClicked = () => {
+        toggle();
+        props.resetList();
+    }
     // const scrollToBottom = () => {
     //     scroll.scrollToBottom();
     // }
@@ -21,10 +25,10 @@ const NavbarComponent = (props) => {
                     offset={-70} 
                     duration={500} 
                     className="navbar-brand"
-                    onClick={toggle}
+                    onClick={brandNameClicked}
                 >Small Business Loan Finder</Link>
                 {/* <button class="navbar-brand" onClick={scrollToTop()} >Lender Matcher App</button> */}
-                <NavbarToggler onClick={toggle} />
+                <NavbarToggler onClick={() => toggle(true)} />
                 <Collapse isOpen={isOpen} navbar>
                     <ul className="navbar-nav ml-auto my-2 my-lg-0">
                         <li className="nav-item">
@@ -36,7 +40,7 @@ const NavbarComponent = (props) => {
                                 offset={-70} 
                                 duration={500} 
                                 className="nav-link"
-                                onClick={toggle}
+                                onClick={ () => toggle(false)}
                             >About</Link>
                             {/* <a href="#about" className="nav-link" onClick={toggle}>About</a> */}
                         </li>
@@ -49,7 +53,7 @@ const NavbarComponent = (props) => {
                                 offset={-70} 
                                 duration={500} 
                                 className="nav-link"
-                                onClick={toggle}
+                                onClick={() => toggle(false)}
                             >FAQ</Link>
                         </li>
                     </ul>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/NavbarComponent';
@@ -8,10 +8,11 @@ import FAQ from './components/FAQComponent';
 import About from './components/AboutComponent';
 
 function App() {
+  const [bankList, setBankList] = useState([]);
   return (
     <>
-      <Navbar />
-      <Main />
+      <Navbar resetList={() => setBankList([])} />
+      <Main bankList={bankList} setList={setBankList} />
       <About />
       <FAQ />
       <Footer />
