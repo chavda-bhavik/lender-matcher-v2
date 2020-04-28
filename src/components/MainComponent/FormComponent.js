@@ -10,6 +10,8 @@ const FormComponent = (props) => {
     let industries = utils.Industries.sort( (a, b) => a.localeCompare(b) ).map( inds => ({ value: inds, label: inds }) );
     
     const latLongIncrease = 4;
+    const latIncrease = 3;
+    const longIncrease = 4;
     const [zipcode, setZipcode] = useState('');
     const [employees, setEmployees] = useState("");
     const [industry, setIndustry] = useState("");
@@ -94,7 +96,7 @@ const FormComponent = (props) => {
     }
     const createLenderFetchQuery = (lat, long) => {
         let query = "select * where";
-        query += ` ${lat-latLongIncrease}>R and R<${lat+latLongIncrease} and ${long-latLongIncrease}>S and S<${long+latLongIncrease}`;
+        query += ` ${lat-latIncrease}>R and R<${lat+latIncrease} and ${long-longIncrease}>S and S<${long+longIncrease}`;
         if(employees !== "") {
             if(employees === "100+") query += " G>100"
             else {
@@ -116,7 +118,7 @@ const FormComponent = (props) => {
     }
     const createOnlyZipcodeFetchQuery = (lat, long) => {
         let query = "select * where";
-        query += ` ${lat-latLongIncrease}>R and R<${lat+latLongIncrease} and ${long-latLongIncrease}>S and S<${long+latLongIncrease}`;
+        query += ` ${lat-latIncrease}>R and R<${lat+latIncrease} and ${long-longIncrease}>S and S<${long+longIncrease}`;
         return query;
     }
     const fetchData = async (id, query) => {
@@ -150,7 +152,7 @@ const FormComponent = (props) => {
     return (
         <section className="app-section bg-light" id="app">
             <div className="container">
-                <p className="PageHeading">Find local Lenders that help Businesses like yours</p>
+                <p className="PageHeading">Find local lenders that help businesses like yours</p>
                 <p className="PageSubHeading">Describe your Business</p>
                 <Form>
                     {/* <Row className="p-0 mb-3">
