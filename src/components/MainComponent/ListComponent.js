@@ -5,13 +5,17 @@ import './ListComponent.css'
 const renderBank = (bank, index, industry, employee, zipcode) => (
     <ListGroupItem className="BankListItem" key={index}>
         <Row className="p-1">
-            <Col xs={12} md={5}>
+            <Col xs={12} md={4}>
                 <p className="BankListBankName">{bank.c[0].v}</p>
                 <p className="BankListAddress">{bank.c[3].v + ", " + bank.c[1].v + ", " + bank.c[2].v} </p>
             </Col>
-            <Col xs={12} md={3} className="text-left">
+            <Col xs={12} md={2} className="text-left">
                 <p className="BankListBankName">${Math.round(bank.c[7].v).toLocaleString()}</p>
                 <p className="BankListAddress">average loan amount</p>
+            </Col>
+            <Col xs={12} md={2} className="text-left">
+                <p className="BankListBankName">{Math.round(bank.c[6].v)}</p>
+                <p className="BankListAddress">average employee size</p>
             </Col>
             <Col xs={12} md={2} className="text-left">
                 <p className="BankListPhoneNumber">{ bank.c[15] === null ? "Not Available" : bank.c[15].v }</p>
@@ -40,7 +44,7 @@ const renderBank = (bank, index, industry, employee, zipcode) => (
 
 const List = React.memo((props) => {
     let banks = props.bankList || [];
-    let bankPerPage = 5;
+    let bankPerPage = 10;
     let totalBanks = banks.length;
     let totalLinks = Math.ceil(totalBanks / bankPerPage);
     

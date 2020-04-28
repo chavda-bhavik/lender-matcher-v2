@@ -8,7 +8,8 @@ import { Form, Row, Col, FormGroup, Label, Input, Button, FormFeedback, Alert } 
 
 const FormComponent = (props) => {
     let industries = utils.Industries.sort( (a, b) => a.localeCompare(b) ).map( inds => ({ value: inds, label: inds }) );
-
+    
+    const latLongIncrease = 4;
     const [zipcode, setZipcode] = useState('');
     const [employees, setEmployees] = useState("");
     const [industry, setIndustry] = useState("");
@@ -93,7 +94,7 @@ const FormComponent = (props) => {
     }
     const createLenderFetchQuery = (lat, long) => {
         let query = "select * where";
-        query += ` ${lat-10}>R and R<${lat+10} and ${long-10}>S and S<${long+10}`;
+        query += ` ${lat-latLongIncrease}>R and R<${lat+latLongIncrease} and ${long-latLongIncrease}>S and S<${long+latLongIncrease}`;
         if(employees !== "") {
             if(employees === "100+") query += " G>100"
             else {
@@ -115,7 +116,7 @@ const FormComponent = (props) => {
     }
     const createOnlyZipcodeFetchQuery = (lat, long) => {
         let query = "select * where";
-        query += ` ${lat-10}>R and R<${lat+10} and ${long-10}>S and S<${long+10}`;
+        query += ` ${lat-latLongIncrease}>R and R<${lat+latLongIncrease} and ${long-latLongIncrease}>S and S<${long+latLongIncrease}`;
         return query;
     }
     const fetchData = async (id, query) => {
@@ -128,7 +129,7 @@ const FormComponent = (props) => {
     let zipcodeInput = <Input 
         type="text" 
         className="form-control" 
-        placeholder="E.g. 90210" 
+        placeholder="E.g. 90012" 
         value={zipcode} 
         onChange={(e) => zipcodeChanged(e.target.value) }
     />
@@ -136,7 +137,7 @@ const FormComponent = (props) => {
         zipcodeInput =<Input 
             type="text" 
             className="form-control" 
-            placeholder="Zipcode" 
+            placeholder="E.g. 90012" 
             value={zipcode} 
             onChange={(e) => zipcodeChanged(e.target.value) }
             invalid
@@ -173,7 +174,7 @@ const FormComponent = (props) => {
                         </Col>
                         <Col xs={12} md={3}>
                             <FormGroup>
-                                <Label>Number of Employees</Label>
+                                <Label className="site-info">Number of Employees</Label>
                                 <Input type="select" id="emps" value={employees} onChange={(e) => setEmployees(e.target.value) }>
                                     <option value="">Select Range</option>
                                     <option value="0-10">0 - 10</option>
@@ -186,7 +187,7 @@ const FormComponent = (props) => {
                         </Col>
                         <Col xs={12} md={3}>
                             <div className="form-group">
-                                <label htmlFor="zipcode">Zipcode <span className="text-danger">*</span></label>
+                                <label htmlFor="zipcode" className="site-info">Zipcode <span className="text-danger">*</span></label>
                                 { zipcodeInput }
                                 <FormFeedback>{zipcodeError}</FormFeedback>
                             </div>

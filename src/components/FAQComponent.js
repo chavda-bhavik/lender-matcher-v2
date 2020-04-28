@@ -21,7 +21,7 @@ const FAQ = (props) => {
                         <p className="site-info mb-1"><a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/ryanlechner">Ryan Lenchner</a> - Product and marketing</p>
                         <p className="site-info mb-1"><a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/nicogimenez">Nico Gimenez</a> - Finance</p>
                         <p className="site-info mb-1"><a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/abshomali">Ali Baghshomali</a> - Product and data science</p>
-                        <p className="site-info mb-1"><a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/wolasikonu">Wolasi Konu</a> - Designer</p>
+                        {/* <p className="site-info mb-1"><a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/wolasikonu">Wolasi Konu</a> - Designer</p> */}
                         <p className="site-info mb-1"><a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/bvchavda">Bhavik Chavda</a> - Developer</p>
                         
                     </Col>
