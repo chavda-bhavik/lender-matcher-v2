@@ -38,7 +38,7 @@ const renderBank = (bank, index, industry, employee, zipcode, need) => (
                         employee.split("-")[0]<=Math.round(bank.c[6].v) &&  employee.split("-")[1]>=Math.round(bank.c[6].v) 
                         ? <li>{employee + " employee"}</li> : null 
                     }
-                    { industry === bank.c[6].v || industry === bank.c[10].v || industry === bank.c[10].v ? <li>{industry}</li> : null }
+                    { industry === bank.c[9].v || industry === bank.c[10].v || industry === bank.c[11].v ? <li>{industry}</li> : null }
                     { bank.c[14].v && need ? <li>provides express loan</li> : null }
                 </ul>
             </Col>
