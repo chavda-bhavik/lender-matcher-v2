@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 import './ListComponent.css'
 
-const renderBank = (bank, index, industry, employee, zipcode) => (
+const renderBank = (bank, index, industry, employee, zipcode, need) => (
     <ListGroupItem className="BankListItem" key={index}>
         <Row className="p-1">
             <Col xs={12} md={4}>
@@ -33,9 +33,13 @@ const renderBank = (bank, index, industry, employee, zipcode) => (
             <Col>
                 <ul id="criteria">
                     <li className="mc-heading">Matching criteria</li>
-                    <li>{zipcode + " zipcode"}</li>
-                    <li>{employee === "" ? "" : employee + " employees"}</li>
-                    <li>{industry}</li>
+                    { bank.c[2].v == zipcode ? <li>{zipcode + " zipcode"}</li> : null}
+                    { 
+                        employee.split("-")[0]<=Math.round(bank.c[6].v) &&  employee.split("-")[1]>=Math.round(bank.c[6].v) 
+                        ? <li>{employee + " employee"}</li> : null 
+                    }
+                    { industry === bank.c[6].v || industry === bank.c[10].v || industry === bank.c[10].v ? <li>{industry}</li> : null }
+                    { bank.c[14].v && need ? <li>provides express loan</li> : null }
                 </ul>
             </Col>
         </Row>
@@ -77,7 +81,7 @@ const List = React.memo((props) => {
                     <ListGroup flush>
                         { 
                             showingBanks.map( (bank, index) => {
-                                return renderBank(bank, index, props.industry, props.employee, props.zipcode);
+                                return renderBank(bank, index, props.industry, props.employee, props.zipcode, props.need);
                             })
                         }
                     </ListGroup>

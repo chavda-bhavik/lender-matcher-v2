@@ -9,9 +9,9 @@ import { Form, Row, Col, FormGroup, Label, Input, Button, FormFeedback, Alert } 
 const FormComponent = (props) => {
     let industries = utils.Industries.sort( (a, b) => a.localeCompare(b) ).map( inds => ({ value: inds, label: inds }) );
     
-    const latLongIncrease = 4;
-    const latIncrease = 3;
-    const longIncrease = 4;
+    // const latLongIncrease = 4;
+    // const latIncrease = 3;
+    // const longIncrease = 4;
     const [zipcode, setZipcode] = useState('');
     const [employees, setEmployees] = useState("");
     const [industry, setIndustry] = useState("");
@@ -59,68 +59,85 @@ const FormComponent = (props) => {
 
         // Data Retriving based on Lat/Long and other criteria
         lenderData = await getLenderData(zipcodeData, lender_table_id);
+        if(industry !== "") {
+            lenderData = filterLendersByIndustry(lenderData, industry.value);
+        }
         if(lenderData.length === 0) {
             // Data retriving based on only Lat/Long
             lenderData = await getOnlyZipcodeData(zipcodeData, lender_table_id);
-            setIsLoading(false);
-            props.setList(lenderData);
-            props.setMainZipcode(zipcode);
-            return;
-            //setErrorAlertVisible(true);
-            //return;
         }
+        lenderData = sortLendersByZipcode(lenderData, zipcode);
         setIsLoading(false);
         props.setList(lenderData);
         props.setMainZipcode(zipcode);
         props.setMainIndustry(industry.value);
         props.setMainEmployee(employees)
-    }
-    const getOnlyZipcodeData = async (zipcodeData, lender_table_id) => {
-        let lat = zipcodeData[0].c[3].v
-        let long = zipcodeData[0].c[4].v;
-        let onlyZipCodeQuery = createOnlyZipcodeFetchQuery(lat, long);
-        let lenderData = await fetchData(lender_table_id, onlyZipCodeQuery);
-        return lenderData;
-    }
-    const getLenderData = async (zipcodeData, lender_table_id) => {
-        let lat = zipcodeData[0].c[3].v
-        let long = zipcodeData[0].c[4].v;
-        let lenderDataQuery = createLenderFetchQuery(lat, long);
-        let lenderData = await fetchData(lender_table_id, lenderDataQuery);
-        return lenderData;
+        props.setMainNeed(needExpressLoan);
     }
     const getZipcodeData = async (us_zipcodes_id) => {
         let zipcodeQuery = createZipcodeFetchQuery();
         let zipcodeData = await fetchData(us_zipcodes_id, zipcodeQuery);
         return zipcodeData;
     }
-    const createLenderFetchQuery = (lat, long) => {
+    const createZipcodeFetchQuery = () => {
+        let query = `select * where A=${zipcode}`
+        return encodeURIComponent(query);
+    }
+
+    // get lenders with only zipcode
+    const getOnlyZipcodeData = async (zipcodeData, lender_table_id) => {
+        // let lat = zipcodeData[0].c[3].v
+        // let long = zipcodeData[0].c[4].v;
+        let state = zipcodeData[0].c[2].v;
+        let onlyZipCodeQuery = createOnlyZipcodeFetchQuery(state);
+        let lenderData = await fetchData(lender_table_id, onlyZipCodeQuery);
+        return lenderData;
+    }
+    const createOnlyZipcodeFetchQuery = (state) => {
+        let query = `select * where B='${state}'`;
+        return encodeURIComponent(query);
+    }
+
+    // get lenders with selected criteria
+    const getLenderData = async (zipcodeData, lender_table_id) => {
+        // let lat = zipcodeData[0].c[3].v
+        // let long = zipcodeData[0].c[4].v;
+        let state = zipcodeData[0].c[2].v;
+        let lenderDataQuery = createLenderFetchQuery(state);
+        let lenderData = await fetchData(lender_table_id, lenderDataQuery);
+        return lenderData;
+    }
+    const createLenderFetchQuery = (state) => {
         let query = "select * where";
-        query += ` ${lat-latIncrease}>R and R<${lat+latIncrease} and ${long-longIncrease}>S and S<${long+longIncrease}`;
+        // query += ` ${lat-latIncrease}>R and R<${lat+latIncrease} and ${long-longIncrease}>S and S<${long+longIncrease}`;
+        query += ` B='${state}'`
         if(employees !== "") {
-            if(employees === "100+") query += " G>100"
+            if(employees === "100+") query += " and G>100"
             else {
                 query += ` and G>${employees.split("-")[0]} and G<${employees.split("-")[1]}`
             }
         }
-        if(industry !== "") {
-            query += ` and J='${industry.value}' or K='${industry.value}' or L='${industry.value}'`
-        }
+        // if(industry !== "") {
+        //     query += ` and (J like '${industry.value}' or K like '${industry.value}' or L like '${industry.value}')`
+        // }
         if(needExpressLoan) {
             query += ` and O=TRUE`
         }
-        //console.log(query);
+
         return encodeURIComponent(query);
     }
-    const createZipcodeFetchQuery = () => {
-        let query = `select * where A=${zipcode}`
-        return query;
+    const filterLendersByIndustry = (array, ind) => {
+        return array.reduce( 
+            (list, bank) => {
+                if(bank.c[9].v === ind || bank.c[10].v === ind || bank.c[11].v === ind) {
+                    list.push(bank);
+                }
+                return list;
+            },
+        [])
     }
-    const createOnlyZipcodeFetchQuery = (lat, long) => {
-        let query = "select * where";
-        query += ` ${lat-latIncrease}>R and R<${lat+latIncrease} and ${long-longIncrease}>S and S<${long+longIncrease}`;
-        return query;
-    }
+    const sortLendersByZipcode = (array, number) => array.sort((a, b) => Math.abs(a.c[2].v - number) - Math.abs(b.c[2].v - number))
+
     const fetchData = async (id, query) => {
         let data = await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tq=${query}`).then(data => data.text())
         data = data.substr(8,)
